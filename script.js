@@ -115,6 +115,15 @@ canvas.addEventListener("mousemove", (e) => {
     basket.x = e.clientX - rect.left - basket.width / 2;
 });
 
+canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+
+    basket.x = touch.clientX - rect.left - basket.width / 2;
+}, { passive: false });
+
 function gameLoop() {
     if (gameOver) return;
 
