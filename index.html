@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>¡Feliz Cumpleaños!</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+    <!-- Archivo CSS -->
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="display:flex; justify-content:center; gap:10px; align-items:center;">🎉
+            <span>¡Feliz Cumpleaños!</span>🎉</h1>
+        <p>Atrapa 20 regalos para desbloquear tu sorpresa especial.</p>
+
+        <canvas id="gameCanvas" width="300" height="400"></canvas>
+
+        <div id="retryLose" class="hidden">
+            ❌ Perdiste todas las vidas ❌<br>
+            <button id="retryBtn" class="btn">Reintentar</button>
+        </div>
+
+        <div id="surprise" class="hidden">
+            🎁 ¡Sorpresa lista para abrir! 🎁<br><br>
+            <button id="openGiftBtn" class="btn hidden">Abrir</button>
+            <br><br>
+            <button id="retryWin" class="btn">Reintentar</button>
+        </div>
+    </div>
+
+    <!-- POPUP -->
+    <div id="popupOverlay" class="hidden overlay">
+        <div id="popupBox" class="popup">
+            <h2 class="popup-title">🎉 ¡Feliz Cumpleaños! 🎉</h2>
+            <p class="popup-text">
+                Te deseo un año lleno de alegría, sorpresas, amor y muchas metas cumplidas.
+                <br><br>
+                ¡Gracias por ser una persona tan especial! 🎁🎂
+            </p>
+            <button onclick="closePopup()" class="btn">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Archivo JavaScript -->
+    <script src="script.js"></script>
+</body>
+
+</html>
