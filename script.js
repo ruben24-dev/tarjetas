@@ -8,6 +8,31 @@ let points = 0;
 let lives = 3;
 let gameOver = false;
 
+/* =============================
+   BLOQUEAR SCROLL EN MÓVIL
+   ============================= */
+canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+}, { passive: false });
+
+canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault();  // Impide que el navegador intente scrollear
+
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+
+    // Actualizar solo el movimiento horizontal
+    basket.x = touch.clientX - rect.left - basket.width / 2;
+
+    // Evita que la cesta salga del canvas
+    if (basket.x < 0) basket.x = 0;
+    if (basket.x + basket.width > canvas.width) basket.x = canvas.width - basket.width;
+
+}, { passive: false });
+
+/* =============================
+   SPAWN DE OBJETOS
+   ============================= */
 function spawnGift() {
     gifts.push({ x: Math.random() * 280, y: -20, size: 20 });
 }
@@ -16,6 +41,9 @@ function spawnObstacle() {
     obstacles.push({ x: Math.random() * 280, y: -20, size: 20 });
 }
 
+/* =============================
+   DIBUJADO
+   ============================= */
 function drawBasket() {
     ctx.fillStyle = "#ff4d6d";
     ctx.fillRect(basket.x, basket.y, basket.width, basket.height);
@@ -39,6 +67,9 @@ function drawObstacles() {
     });
 }
 
+/* =============================
+   ACTUALIZACIÓN DE OBJETOS
+   ============================= */
 function updateGifts() {
     gifts.forEach(g => g.y += 2);
     gifts = gifts.filter(g => {
@@ -71,6 +102,9 @@ function updateObstacles() {
     });
 }
 
+/* =============================
+   INTERFAZ
+   ============================= */
 function drawHUD() {
     ctx.fillStyle = "#000";
     ctx.font = "16px Arial";
@@ -88,7 +122,6 @@ function endGame(win) {
         document.getElementById("openGiftBtn").onclick = () => {
             openPopup();
         };
-
     } else {
         document.getElementById("retryLose").classList.remove("hidden");
     }
@@ -110,20 +143,20 @@ function resetGame() {
 document.getElementById("retryBtn").addEventListener("click", resetGame);
 document.getElementById("retryWin").addEventListener("click", resetGame);
 
+/* =============================
+   MOVIMIENTO CON MOUSE
+   ============================= */
 canvas.addEventListener("mousemove", (e) => {
     const rect = canvas.getBoundingClientRect();
     basket.x = e.clientX - rect.left - basket.width / 2;
+
+    if (basket.x < 0) basket.x = 0;
+    if (basket.x + basket.width > canvas.width) basket.x = canvas.width - basket.width;
 });
 
-canvas.addEventListener("touchmove", (e) => {
-    e.preventDefault();
-
-    const rect = canvas.getBoundingClientRect();
-    const touch = e.touches[0];
-
-    basket.x = touch.clientX - rect.left - basket.width / 2;
-}, { passive: false });
-
+/* =============================
+   BUCLE PRINCIPAL
+   ============================= */
 function gameLoop() {
     if (gameOver) return;
 
@@ -143,6 +176,9 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
+/* =============================
+   POPUP
+   ============================= */
 function openPopup() {
     document.getElementById("popupOverlay").style.display = "flex";
 }
